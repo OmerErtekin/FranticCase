@@ -26,15 +26,17 @@ namespace _Game.Scripts.Player
         {
 	        EventManager.StartListening(EventManager.OnPlayerStartToMove,SetAnimatorOnMovementStart);
 	        EventManager.StartListening(EventManager.OnPlayerStop,SetAnimatorOnMovementStop);
+	        EventManager.StartListening(EventManager.OnWeaponEquiped,UpdateIKForWeapon);
         }
 
         private void OnDisable()
         {
 	        EventManager.StopListening(EventManager.OnPlayerStartToMove,SetAnimatorOnMovementStart);
 	        EventManager.StopListening(EventManager.OnPlayerStop,SetAnimatorOnMovementStop);
+	        EventManager.StopListening(EventManager.OnWeaponEquiped,UpdateIKForWeapon);
         }
 
-        private void Start()
+        private void Awake()
         {
 	        _animator = GetComponent<Animator>();
 	        _aimIK = GetComponent<AimIK>();
@@ -61,6 +63,12 @@ namespace _Game.Scripts.Player
         {
 	        SetSecondLayerWeight(0,0.1f);
 	        SetIKWeights(0,0.1f);
+        }
+
+        private void UpdateIKForWeapon(Weapon weapon)
+        {
+	        _bodyIK.solver.leftHandEffector.target = weapon.leftHandTargetTransform;
+	        _aimIK.solver.transform = weapon.aimTargetTransform;
         }
         
         public void PlayAnimation(PlayerAnims anim, float fadeDuration = 0.1f, bool willReset = false)

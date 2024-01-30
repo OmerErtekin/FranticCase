@@ -9,5 +9,12 @@ namespace _Game.Scripts
         Fail = 4,
         Victory = 5
     }
+
+    public enum WeaponTypes
+    {
+        Pistol = 0,
+        SmgRifle = 1,
+        Taser = 2
+    }
 }
 

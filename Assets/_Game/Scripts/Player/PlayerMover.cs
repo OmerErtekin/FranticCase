@@ -17,7 +17,23 @@ namespace _Game.Scripts.Player
 	    private Vector3 _lastMousePos;
         #endregion
 
-        private void Start()
+        private void OnEnable()
+        {
+	        EventManager.StartListening(EventManager.OnLevelStarted,StartMovement);
+	        EventManager.StartListening(EventManager.OnLevelInitialized,StopMovement);
+	        EventManager.StartListening(EventManager.OnLevelCompleted,StopMovement);
+	        EventManager.StartListening(EventManager.OnLevelFailed,StopMovement);
+        }
+
+        private void OnDisable()
+        {
+	        EventManager.StopListening(EventManager.OnLevelStarted,StartMovement);
+	        EventManager.StopListening(EventManager.OnLevelInitialized,StopMovement);
+	        EventManager.StopListening(EventManager.OnLevelCompleted,StopMovement);
+	        EventManager.StopListening(EventManager.OnLevelFailed,StopMovement);
+        }
+
+        private void Awake()
         {
 	        _controller = GetComponent<PlayerController>();
 	        _rigidbody = _controller.Rigidbody;
@@ -26,19 +42,14 @@ namespace _Game.Scripts.Player
 
         private void Update()
         {
-	        if(Input.GetKeyDown(KeyCode.S))
-		        StartMovement();
-	        if(Input.GetKeyDown(KeyCode.D))
-		        StopMovement();
-	        
-            HandleMovement();
+            Move();
 	        if (!_canMove) return;
 	        
 	        HandleInput();
-	        HandleAnimation();
+	        DecideRunAnimation();
         }
         
-        private void HandleMovement()
+        private void Move()
         {
 	        _inputX = Mathf.Clamp(_inputX, -Constants.MAX_SWERVE_AMOUNT, Constants.MAX_SWERVE_AMOUNT) * Constants.SWERVE_SPEED;
 	        _lerpedX = Mathf.Lerp(_lerpedX, _inputX, 25 * Time.deltaTime);
@@ -69,7 +80,7 @@ namespace _Game.Scripts.Player
 	        }
         }
 
-        private void HandleAnimation()
+        private void DecideRunAnimation()
         {
 	        if (Mathf.Abs(_rigidbody.velocity.x) < Constants.X_VELOCITY_TRESHHOLD)
 	        {

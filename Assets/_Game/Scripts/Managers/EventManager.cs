@@ -180,8 +180,13 @@ namespace _Game.Scripts.Managers
         #endregion
 
         #region Actions
+        public static readonly Action OnLevelInitialized = () => { };
+        public static readonly Action OnLevelStarted = () => { };
+        public static readonly Action OnLevelFailed = () => { };
+        public static readonly Action OnLevelCompleted = () => { };
         public static readonly Action OnPlayerStartToMove = () => { };
         public static readonly Action OnPlayerStop = () => { };
+        public static readonly Action<Weapon> OnWeaponEquiped = _ => { };
         #endregion
     }
 }
