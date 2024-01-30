@@ -180,6 +180,8 @@ namespace _Game.Scripts.Managers
         #endregion
 
         #region Actions
+        public static readonly Action OnPlayerStartToMove = () => { };
+        public static readonly Action OnPlayerStop = () => { };
         #endregion
     }
 }
