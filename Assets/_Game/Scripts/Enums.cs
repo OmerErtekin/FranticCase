@@ -16,5 +16,29 @@ namespace _Game.Scripts
         SmgRifle = 1,
         Taser = 2
     }
+
+    public enum AttackFormation
+    {
+        Single,
+        SingleDiagonal,
+        MultipleDiagonal,
+    }
+    
+    public enum UpgradeType
+    {
+        FireRate,
+        BulletDamage,
+        AttackFormation,
+        BulletBounceCount
+    }
+    
+    [System.Flags]
+    public enum Axis
+    {
+        None = 0,
+        X = 1,
+        Y = 2,
+        Z = 4 
+    }
 }
 

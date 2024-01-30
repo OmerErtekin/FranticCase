@@ -187,6 +187,7 @@ namespace _Game.Scripts.Managers
         public static readonly Action OnPlayerStartToMove = () => { };
         public static readonly Action OnPlayerStop = () => { };
         public static readonly Action<Weapon> OnWeaponEquiped = _ => { };
+        public static readonly Action OnPlayerUpgraded = () => { };
         #endregion
     }
 }

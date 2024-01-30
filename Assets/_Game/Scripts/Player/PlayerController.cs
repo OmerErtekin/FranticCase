@@ -1,41 +1,64 @@
-using System;
 using UnityEngine;
 
 namespace _Game.Scripts.Player
 {
     public class PlayerController : MonoBehaviour
     {
-    	#region Components
-	    [SerializeField] private PlayerMover _mover;
-	    [SerializeField] private PlayerAnimator _animator;
-	    [SerializeField] private PlayerWeaponHandler _weaponHandler;
-	    [SerializeField] private Rigidbody _rigidbody;
-	    #endregion
+        #region Components
+        [SerializeField] private PlayerMover _mover;
+        [SerializeField] private PlayerAnimator _animator;
+        [SerializeField] private PlayerWeaponHandler _weaponHandler;
+        [SerializeField] private PlayerUpgradeHandler _upgradeHandler;
+        [SerializeField] private Rigidbody _rigidbody;
+        #endregion
+        
+        #region Propoerties
+        public PlayerWeaponHandler WeaponHandler => _weaponHandler;
+        public PlayerUpgradeHandler UpgradeHandler => _upgradeHandler;
+        public PlayerAnimator Animator => _animator;
+        public Rigidbody Rigidbody => _rigidbody;
+        #endregion
+        
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                _upgradeHandler.Upgrade(UpgradeType.FireRate);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                _upgradeHandler.Upgrade(UpgradeType.BulletDamage);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                _upgradeHandler.Upgrade(UpgradeType.AttackFormation);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                _upgradeHandler.Upgrade(UpgradeType.BulletBounceCount);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                _weaponHandler.EquipWeapon(WeaponTypes.Pistol);
+                _weaponHandler.CurrentWeapon.CanFire = true;
+            }
 
-	    #region Variables
-	    public PlayerMover Mover => _mover;
-	    public PlayerAnimator Animator => _animator;
-	    public PlayerWeaponHandler WeaponHandler => _weaponHandler;
-	    public Rigidbody Rigidbody => _rigidbody;
-	    #endregion
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                _weaponHandler.EquipWeapon(WeaponTypes.SmgRifle);
+                _weaponHandler.CurrentWeapon.CanFire = true;
+            }
 
-	    private void Update()
-	    {
-		    if (Input.GetKeyDown(KeyCode.F1))
-		    {
-			    WeaponHandler.EquipWeapon(WeaponTypes.Pistol);
-		    }
-		    
-		    if (Input.GetKeyDown(KeyCode.F2))
-		    {
-			    WeaponHandler.EquipWeapon(WeaponTypes.SmgRifle);
-		    }
-		    
-		    if (Input.GetKeyDown(KeyCode.F3))
-		    {
-			    WeaponHandler.EquipWeapon(WeaponTypes.Taser);
-		    }
-	    }
+            if (Input.GetKeyDown(KeyCode.F3))
+            {
+                _weaponHandler.EquipWeapon(WeaponTypes.Taser);
+                _weaponHandler.CurrentWeapon.CanFire = true;
+            }
+        }
     }
 }
 

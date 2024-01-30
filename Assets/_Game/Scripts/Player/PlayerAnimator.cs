@@ -22,6 +22,10 @@ namespace _Game.Scripts.Player
 	    private Tween _layerWeightTween,_ikWeightTween;
         #endregion
 
+        #region Properties
+        public bool IsIKEnabled { get; private set; }
+        #endregion
+
         private void OnEnable()
         {
 	        EventManager.StartListening(EventManager.OnPlayerStartToMove,SetAnimatorOnMovementStart);
@@ -67,8 +71,8 @@ namespace _Game.Scripts.Player
 
         private void UpdateIKForWeapon(Weapon weapon)
         {
-	        _bodyIK.solver.leftHandEffector.target = weapon.leftHandTargetTransform;
-	        _aimIK.solver.transform = weapon.aimTargetTransform;
+	        _bodyIK.solver.leftHandEffector.target = weapon.LeftHandTargetTransform;
+	        _aimIK.solver.transform = weapon.AimTargetTransform;
         }
         
         public void PlayAnimation(PlayerAnims anim, float fadeDuration = 0.1f, bool willReset = false)
@@ -96,11 +100,12 @@ namespace _Game.Scripts.Player
 	        var currentWeight = _animator.GetLayerWeight(1);
 	        _layerWeightTween?.Kill();
 	        _layerWeightTween = DOTween.To(() => currentWeight, x => currentWeight = x, target, duration)
-		        .OnUpdate(() => _animator.SetLayerWeight(1, currentWeight));
+		        .OnUpdate(() => _animator.SetLayerWeight(1, currentWeight)).SetTarget(this);
         }
 
         private void SetIKWeights(float target, float duration)
         {
+	        IsIKEnabled = false;
 	        var currentWeight = _aimIK.solver.IKPositionWeight;
 	        _ikWeightTween?.Kill();
 	        _ikWeightTween = DOTween.To(() => currentWeight, x => currentWeight = x, target, duration)
@@ -108,7 +113,10 @@ namespace _Game.Scripts.Player
 		        {
 			        _aimIK.solver.IKPositionWeight = currentWeight;
 			        _bodyIK.solver.IKPositionWeight = currentWeight;
-		        });
+		        }).OnComplete(() =>
+		        {
+			        IsIKEnabled = true;
+		        }).SetTarget(this);
         }
     }
 }

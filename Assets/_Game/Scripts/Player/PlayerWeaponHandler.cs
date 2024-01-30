@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using _Game.Scripts.Managers;
 using UnityEngine;
@@ -8,11 +7,18 @@ namespace _Game.Scripts
     public class PlayerWeaponHandler : MonoBehaviour
     {
     	#region Components
+	    [SerializeField] private Follower _firePosFollower;
 	    private Weapon _currentWeapon;
     	#endregion
 
     	#region Variables
+	    [SerializeField] private List<Transform> _firePoses;
 	    [SerializeField] private List<Weapon> _weapons;
+	    #endregion
+
+	    #region Properties
+	    public List<Transform> FirePoses => _firePoses;
+	    public Weapon CurrentWeapon => _currentWeapon;
 	    #endregion
 
 	    private void OnEnable()
@@ -40,7 +46,7 @@ namespace _Game.Scripts
 	    private void StartFiringAtLevelStart()
 	    {
 		    if(!_currentWeapon) return;
-		    
+            
 		    _currentWeapon.CanFire = true;
 	    }
 
@@ -60,6 +66,7 @@ namespace _Game.Scripts
 			    if (weapon.WeaponType == type)
 			    {
 				    _currentWeapon = weapon;
+				    _firePosFollower.SetTarget(_currentWeapon.AimTargetTransform);
 				    weapon.EnableWeapon();
 			    }
 			    else
