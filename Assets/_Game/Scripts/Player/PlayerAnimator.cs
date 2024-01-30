@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Game.Scripts.Managers;
 using DG.Tweening;
+using RootMotion.FinalIK;
 using UnityEngine;
 
 namespace _Game.Scripts.Player
@@ -11,12 +12,14 @@ namespace _Game.Scripts.Player
     {
     	#region Components
 	    private Animator _animator;
+	    private AimIK _aimIK;
+	    private FullBodyBipedIK _bodyIK;
     	#endregion
 
     	#region Variables
 	    private readonly List<int> _animationHashes = new();
 	    private PlayerAnims _lastAnim;
-	    private Tween _weightTween;
+	    private Tween _layerWeightTween,_ikWeightTween;
         #endregion
 
         private void OnEnable()
@@ -34,6 +37,8 @@ namespace _Game.Scripts.Player
         private void Start()
         {
 	        _animator = GetComponent<Animator>();
+	        _aimIK = GetComponent<AimIK>();
+	        _bodyIK = GetComponent<FullBodyBipedIK>();
         }
 
         private void ConvertAnimsToHash()
@@ -49,11 +54,13 @@ namespace _Game.Scripts.Player
         private void SetAnimatorOnMovementStart()
         {
 	        SetSecondLayerWeight(1,0.25f);
+	        SetIKWeights(1, 0.5f);
         }
 
         private void SetAnimatorOnMovementStop()
         {
 	        SetSecondLayerWeight(0,0.1f);
+	        SetIKWeights(0,0.1f);
         }
         
         public void PlayAnimation(PlayerAnims anim, float fadeDuration = 0.1f, bool willReset = false)
@@ -79,9 +86,21 @@ namespace _Game.Scripts.Player
         private void SetSecondLayerWeight(float target, float duration)
         {
 	        var currentWeight = _animator.GetLayerWeight(1);
-	        _weightTween?.Kill();
-	        _weightTween = DOTween.To(() => currentWeight, x => currentWeight = x, target, duration)
+	        _layerWeightTween?.Kill();
+	        _layerWeightTween = DOTween.To(() => currentWeight, x => currentWeight = x, target, duration)
 		        .OnUpdate(() => _animator.SetLayerWeight(1, currentWeight));
+        }
+
+        private void SetIKWeights(float target, float duration)
+        {
+	        var currentWeight = _aimIK.solver.IKPositionWeight;
+	        _ikWeightTween?.Kill();
+	        _ikWeightTween = DOTween.To(() => currentWeight, x => currentWeight = x, target, duration)
+		        .OnUpdate(() =>
+		        {
+			        _aimIK.solver.IKPositionWeight = currentWeight;
+			        _bodyIK.solver.IKPositionWeight = currentWeight;
+		        });
         }
     }
 }

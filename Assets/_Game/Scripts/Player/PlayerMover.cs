@@ -100,6 +100,7 @@ namespace _Game.Scripts.Player
 	        _inputX = 0;
 	        _zSpeed = 0;
 	        _animator.PlayAnimation(PlayerAnims.Idle);
+	        EventManager.TriggerEvent(EventManager.OnPlayerStop);
         }
     }
 }
