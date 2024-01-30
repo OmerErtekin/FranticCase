@@ -19,7 +19,6 @@ namespace _Game.Scripts
         [SerializeField] private float _bulletSpeed;
         [SerializeField] private Transform _leftHandTransform, _aimTransform;
         [SerializeField] private WeaponTypes _type;
-        private Transform _playerTransform;
         private List<Transform> _firePoses;
         private float _currentFireRate, _nextFireTime;
         private int _currentBulletDamage, _currentBulletBounceCount;
@@ -46,7 +45,6 @@ namespace _Game.Scripts
         public void EnableWeapon()
         {
             _objectPool = GameController.Instance.ObjectPool;
-            _playerTransform = GameController.Instance.Player.transform;
             _playerAnimator = GameController.Instance.Player.Animator;
             _firePoses = GameController.Instance.Player.WeaponHandler.FirePoses;
             ApplyUpgrades();
@@ -86,17 +84,17 @@ namespace _Game.Scripts
                     _currentBullet.SetBullet(_currentBulletDamage, _currentBulletBounceCount, _bulletSpeed, _firePoses[0]);
                     break;
                 case AttackFormation.SingleDiagonal:
-                    for (var i = 0; i < 3; i++)
+                    for (var i = Constants.SINGLE_DIAGONAL_START_INDEX; i < Constants.SINGLE_DIAGONAL_START_INDEX + 3; i++)
                     {
                         _currentBullet = _objectPool.GetBullet();
                         _currentBullet.SetBullet(_currentBulletDamage, _currentBulletBounceCount, _bulletSpeed, _firePoses[i]);
                     }
                     break;
                 case AttackFormation.MultipleDiagonal:
-                    for (var i = 0; i < 6; i++)
+                    for (var i = Constants.MULTI_DIAGONAL_START_INDEX; i < Constants.MULTI_DIAGONAL_START_INDEX + 6; i++)
                     {
                         _currentBullet = _objectPool.GetBullet();
-                        _currentBullet.SetBullet(_currentBulletDamage, _currentBulletBounceCount, _bulletSpeed, _firePoses[i+3]);
+                        _currentBullet.SetBullet(_currentBulletDamage, _currentBulletBounceCount, _bulletSpeed, _firePoses[i]);
                     }
                     break;
             }

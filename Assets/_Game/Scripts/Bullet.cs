@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace _Game.Scripts
@@ -9,7 +10,7 @@ namespace _Game.Scripts
 
     	#region Variables
 	    [SerializeField] private float _baseLifeTime;
-	    private bool _canBounce,_isExploded;
+	    private bool _isExploded;
 	    private float _currentLifeTime,_currentSpeed;
 	    private int _currentDamage,_currentBounceCount;
 	    #endregion
@@ -28,6 +29,17 @@ namespace _Game.Scripts
 	    private void Update()
 	    {
 		    MoveForward();
+	    }
+	    
+	    private void OnCollisionEnter(Collision other)
+	    {
+		    //Bullets can only contact with walls & obstacles. It can be set on Bullet/Rigidbody/LayerOverrides
+		    if (other.transform.TryGetComponent(out Obstacle obstacle))
+		    {
+			    obstacle.HitByBullet(this);
+		    }
+		    
+		    TryBounce(other.contacts[0].normal);
 	    }
 
 	    private void MoveForward()
@@ -48,6 +60,19 @@ namespace _Game.Scripts
 
 		    _isExploded = true;
 		    gameObject.SetActive(false);
+	    }
+
+	    private void TryBounce(Vector3 hitNormal)
+	    {
+		    if (_currentBounceCount <= 0)
+		    {
+			    Explode();
+                return;
+		    }
+
+		    _currentBounceCount--;
+		    var newDirection = Vector3.Reflect(transform.forward, hitNormal);
+		    transform.forward = newDirection;
 	    }
     }
 }

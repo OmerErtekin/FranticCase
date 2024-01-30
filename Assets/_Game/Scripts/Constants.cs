@@ -3,8 +3,8 @@
     public static class Constants
     {
         #region Weapon Constants
-        public const float ANGLE_BETWEEN_FIRE_POSES = 20;
-        public const float DISTANCE_BETWEEN_FIRE_POSES = 2;
+        public const int SINGLE_DIAGONAL_START_INDEX = 0;
+        public const int MULTI_DIAGONAL_START_INDEX = 3;
         #endregion
         
         #region Movement Constants

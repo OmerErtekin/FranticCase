@@ -59,14 +59,12 @@ namespace _Game.Scripts.Player
 
         private void SetAnimatorOnMovementStart()
         {
-	        SetSecondLayerWeight(1,0.25f);
-	        SetIKWeights(1, 0.5f);
+	        SetSecondLayerAndIK(1,0.25f);
         }
 
         private void SetAnimatorOnMovementStop()
         {
-	        SetSecondLayerWeight(0,0.1f);
-	        SetIKWeights(0,0.1f);
+	        SetSecondLayerAndIK(0,0.1f);
         }
 
         private void UpdateIKForWeapon(Weapon weapon)
@@ -75,7 +73,10 @@ namespace _Game.Scripts.Player
 	        _aimIK.solver.transform = weapon.AimTargetTransform;
         }
         
-        public void PlayAnimation(PlayerAnims anim, float fadeDuration = 0.1f, bool willReset = false)
+        //Instead of creating connections between animations on animator controller,
+        //I use more programatic way. With this approach, we don't need to have connections between animations.
+        //Just add animations to controller and name it same with enum. Then we can play and pass to other anims smoothly.
+        public void PlayAnimation(PlayerAnims anim, float changeDuration = 0.1f, bool willReset = false)
         {
 	        if(_lastAnim == anim && !willReset) return;
 	        
@@ -85,34 +86,31 @@ namespace _Game.Scripts.Player
 	        }
 
 	        _lastAnim = anim;
-	        if (fadeDuration > 0 && !willReset)
+	        if (changeDuration > 0 && !willReset)
 	        {
-		        _animator.CrossFadeInFixedTime(_animationHashes[(int)anim], fadeDuration);
+		        _animator.CrossFadeInFixedTime(_animationHashes[(int)anim], changeDuration); //will change smoothly in given time
 	        }
 	        else
 	        {
-		        _animator.Play(_animationHashes[(int)anim]);
+		        _animator.Play(_animationHashes[(int)anim]); //directly plays animation from start
 	        }
         }
 
-        private void SetSecondLayerWeight(float target, float duration)
+        private void SetSecondLayerAndIK(float target, float duration)
         {
 	        var currentWeight = _animator.GetLayerWeight(1);
 	        _layerWeightTween?.Kill();
 	        _layerWeightTween = DOTween.To(() => currentWeight, x => currentWeight = x, target, duration)
 		        .OnUpdate(() => _animator.SetLayerWeight(1, currentWeight)).SetTarget(this);
-        }
-
-        private void SetIKWeights(float target, float duration)
-        {
+	        
 	        IsIKEnabled = false;
-	        var currentWeight = _aimIK.solver.IKPositionWeight;
+	        var currenIKtWeight = _aimIK.solver.IKPositionWeight;
 	        _ikWeightTween?.Kill();
-	        _ikWeightTween = DOTween.To(() => currentWeight, x => currentWeight = x, target, duration)
+	        _ikWeightTween = DOTween.To(() => currenIKtWeight, x => currenIKtWeight = x, target, duration)
 		        .OnUpdate(() =>
 		        {
-			        _aimIK.solver.IKPositionWeight = currentWeight;
-			        _bodyIK.solver.IKPositionWeight = currentWeight;
+			        _aimIK.solver.IKPositionWeight = currenIKtWeight;
+			        _bodyIK.solver.IKPositionWeight = currenIKtWeight;
 		        }).OnComplete(() =>
 		        {
 			        IsIKEnabled = true;

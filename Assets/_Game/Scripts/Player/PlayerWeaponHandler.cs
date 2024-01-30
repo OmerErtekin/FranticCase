@@ -12,6 +12,7 @@ namespace _Game.Scripts
     	#endregion
 
     	#region Variables
+	    //To have easier configurations on fire poses, i made them with transforms. So anyone can just move transforms as s/he wish.
 	    [SerializeField] private List<Transform> _firePoses;
 	    [SerializeField] private List<Weapon> _weapons;
 	    #endregion

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using _Game.Scripts;
 using _Game.Scripts.Managers;
 using UnityEngine;
@@ -39,36 +41,47 @@ namespace _Game.Scripts.Player
         
         public void Upgrade(UpgradeType upgradeType)
         {
+            if(!IsUpgradeAvailable(upgradeType)) return;
+            
             switch (upgradeType)
             {
                 case UpgradeType.FireRate:
-                    if (UpgradeData.FireRateLevel >= Constants.MAX_FIRE_RATE_LEVEL) return;
-                    
                     UpgradeData.FireRateLevel++;
                     break;
                 case UpgradeType.BulletDamage:
-                    if (UpgradeData.BulletDamageLevel >= Constants.MAX_DAMAGE_LEVEL) return;
-                    
                     UpgradeData.BulletDamageLevel++;
                     break;
                 case UpgradeType.AttackFormation:
-                    if ((int)UpgradeData.AttackFormation >= Constants.MAX_FORMATION_LEVEL) return;
-                    
                     UpgradeData.AttackFormation = (AttackFormation)((int)UpgradeData.AttackFormation + 1);
                     break;
                 case UpgradeType.BulletBounceCount:
-                    if (UpgradeData.BulletBounceCount >= Constants.MAX_BOUNCE_BULLET_LEVEL) return;
-                    
                     UpgradeData.BulletBounceCount++;
                     break;
             }
-
             EventManager.TriggerEvent(EventManager.OnPlayerUpgraded);
+        }
+
+        public List<UpgradeType> GetAvailableUpgrades()
+        {
+            return Enum.GetValues(typeof(UpgradeType)).Cast<UpgradeType>().Where(IsUpgradeAvailable)
+                .ToList();
+        }
+        
+        private bool IsUpgradeAvailable(UpgradeType upgradeType)
+        {
+            return upgradeType switch
+            {
+                UpgradeType.FireRate => UpgradeData.FireRateLevel < Constants.MAX_FIRE_RATE_LEVEL,
+                UpgradeType.BulletDamage => UpgradeData.BulletDamageLevel < Constants.MAX_DAMAGE_LEVEL,
+                UpgradeType.AttackFormation => (int)UpgradeData.AttackFormation < Constants.MAX_FORMATION_LEVEL,
+                UpgradeType.BulletBounceCount => UpgradeData.BulletBounceCount < Constants.MAX_BOUNCE_BULLET_LEVEL,
+                _ => false
+            };
         }
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class PlayerUpgradeData
 {
     public int FireRateLevel;
