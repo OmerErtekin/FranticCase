@@ -12,8 +12,8 @@ namespace _Game.Scripts
 
     	#region Variables
 	    [SerializeField] private List<GameObject> _bulletModels;
-	    [SerializeField] private float _baseLifeTime;
-	    private bool _isExploded;
+	    [SerializeField] private float _baseLifeTime,_lifeTimeBonusAtBounce;
+	    private bool _isExploded,_isBounceLevelMax;
 	    private float _currentLifeTime,_currentSpeed;
 	    private int _currentBounceCount,_currentDamage;
 	    #endregion
@@ -48,6 +48,7 @@ namespace _Game.Scripts
 		    _currentDamage = damage;
 		    transform.position = firePos.position;
 		    transform.rotation = firePos.rotation;
+		    _isBounceLevelMax = bounceCount > 2; //To enable level 3 feature of bounce
 	    }
 
 	    private void MoveForward()
@@ -84,7 +85,15 @@ namespace _Game.Scripts
                 return;
 		    }
 
-		    _currentBounceCount--;
+		    if (!_isBounceLevelMax)
+		    {
+				_currentBounceCount--;
+		    }
+		    else
+		    {
+			    _currentLifeTime += _lifeTimeBonusAtBounce;
+		    }
+		    
 		    var newDirection = Vector3.Reflect(transform.forward, hitNormal);
 		    transform.forward = newDirection;
 	    }
