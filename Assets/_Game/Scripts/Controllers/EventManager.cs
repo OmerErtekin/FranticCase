@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Game.Scripts.Managers
+namespace _Game.Scripts.Controllers
 {
     [DefaultExecutionOrder(-99)]
     public class EventManager : MonoBehaviour

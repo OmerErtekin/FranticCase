@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _Game.Scripts.Managers;
+using _Game.Scripts.Controllers;
 using DG.Tweening;
 using RootMotion.FinalIK;
 using UnityEngine;

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace _Game.Scripts.Managers
+namespace _Game.Scripts.Controllers
 {
-    public class ObjectPoolManager : MonoBehaviour
+    public class ObjectPoolController : MonoBehaviour
     {
     	#region Components
 	    [SerializeField] private Bullet _bulletPrefab;

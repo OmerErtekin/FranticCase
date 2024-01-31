@@ -1,4 +1,4 @@
-using _Game.Scripts.Managers;
+using _Game.Scripts.Controllers;
 using UnityEngine;
 
 namespace _Game.Scripts.Player
@@ -12,13 +12,16 @@ namespace _Game.Scripts.Player
         [SerializeField] private PlayerUpgradeHandler _upgradeHandler;
         [SerializeField] private Rigidbody _rigidbody;
         #endregion
+
+        #region Variables
+        private PlayerState _playerState;
+        #endregion
         
         #region Propoerties
         public PlayerWeaponHandler WeaponHandler => _weaponHandler;
         public PlayerUpgradeHandler UpgradeHandler => _upgradeHandler;
         public PlayerAnimator Animator => _animator;
         public Rigidbody Rigidbody => _rigidbody;
-        public PlayerState PlayerState { get; set; }
         #endregion
 
         private void OnEnable()
@@ -35,26 +38,6 @@ namespace _Game.Scripts.Player
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                _upgradeHandler.Upgrade(UpgradeType.FireRate);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                _upgradeHandler.Upgrade(UpgradeType.BulletDamage);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                _upgradeHandler.Upgrade(UpgradeType.AttackFormation);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                _upgradeHandler.Upgrade(UpgradeType.BulletBounceCount);
-            }
-            
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 _weaponHandler.EquipWeapon(WeaponTypes.Pistol);
@@ -76,25 +59,25 @@ namespace _Game.Scripts.Player
 
         public void WinTheLevel()
         {
-            if(PlayerState == PlayerState.Won) return;
+            if(_playerState == PlayerState.Won) return;
             
-            PlayerState = PlayerState.Won;
+            _playerState = PlayerState.Won;
             _mover.StopMovement(PlayerAnims.Victory);
             EventManager.TriggerEvent(EventManager.OnLevelCompleted);
         }
         
         public void FailTheLevel()
         {
-            if(PlayerState == PlayerState.Failed) return;
+            if(_playerState == PlayerState.Failed) return;
             
-            PlayerState = PlayerState.Failed;
+            _playerState = PlayerState.Failed;
             _mover.StopMovement(PlayerAnims.Fail);
             EventManager.TriggerEvent(EventManager.OnLevelFailed);
         }
 
-        private void SetStateOnInitilaze() => PlayerState = PlayerState.WaitForStart;
+        private void SetStateOnInitilaze() => _playerState = PlayerState.WaitForStart;
 
-        private void SetStateOnMovement() => PlayerState = PlayerState.Run;
+        private void SetStateOnMovement() => _playerState = PlayerState.Run;
     }
 }
 

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Game.Scripts;
-using _Game.Scripts.Managers;
+using _Game.Scripts.Controllers;
 using UnityEngine;
 
 namespace _Game.Scripts.Player

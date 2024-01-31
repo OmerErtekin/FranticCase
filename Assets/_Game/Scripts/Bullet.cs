@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using _Game.Scripts.Level;
 using UnityEngine;
 
 namespace _Game.Scripts
@@ -57,7 +58,7 @@ namespace _Game.Scripts
 	    {
 		    if (_currentLifeTime <= 0)
 		    {
-			    Explode();
+			    Explode(false);
 			    return;
 		    }
 
@@ -65,14 +66,17 @@ namespace _Game.Scripts
 		    transform.position += transform.forward * (_currentSpeed * Time.deltaTime);
 	    }
 
-	    private void Explode()
+	    private void Explode(bool willPlayParticle)
 	    {
 		    if(_isExploded) return;
 
 		    _isExploded = true;
-		    _explosionParticle.transform.parent = null;
-		    _explosionParticle.transform.SetPositionAndRotation(transform.position,transform.rotation);
-		    _explosionParticle.Play();
+		    if (willPlayParticle)
+		    {
+			    _explosionParticle.transform.parent = null;
+			    _explosionParticle.transform.SetPositionAndRotation(transform.position,transform.rotation);
+			    _explosionParticle.Play();
+		    }
 		    gameObject.SetActive(false);
 	    }
 
@@ -80,7 +84,7 @@ namespace _Game.Scripts
 	    {
 		    if (_currentBounceCount <= 0)
 		    {
-			    Explode();
+			    Explode(true);
                 return;
 		    }
 

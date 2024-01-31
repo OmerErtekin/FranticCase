@@ -1,9 +1,8 @@
-using _Game.Scripts.Managers;
 using UnityEngine;
 
-namespace _Game.Scripts
+namespace _Game.Scripts.Controllers
 {
-    public class LevelManager : MonoBehaviour
+    public class LevelController : MonoBehaviour
     {
     	#region Components
     	#endregion

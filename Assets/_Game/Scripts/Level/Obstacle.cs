@@ -3,7 +3,7 @@ using _Game.Scripts.Player;
 using TMPro;
 using UnityEngine;
 
-namespace _Game.Scripts
+namespace _Game.Scripts.Level
 {
     public class Obstacle : MonoBehaviour
     {

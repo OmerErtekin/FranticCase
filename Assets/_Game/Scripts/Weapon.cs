@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using _Game.Scripts.Managers;
+using _Game.Scripts.Controllers;
 using _Game.Scripts.Player;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace _Game.Scripts
     {
         #region Components
         private PlayerAnimator _playerAnimator;
-        private ObjectPoolManager _objectPool;
+        private ObjectPoolController _objectPool;
         private Bullet _currentBullet;
         #endregion
 
