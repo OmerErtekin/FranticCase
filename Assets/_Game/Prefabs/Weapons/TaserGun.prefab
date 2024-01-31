@@ -129,9 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696eb81bfbe63e147b1c1e37cf4e98f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseFireRate: 1
+  _baseFireRate: 1.25
   _baseUpgradeFactor: 1.75
-  _baseBulletDamage: 1
+  _baseBulletDamage: 2
   _bulletSpeed: 20
   _leftHandTransform: {fileID: 7642762421685192527}
   _aimTransform: {fileID: 6762574066655982531}

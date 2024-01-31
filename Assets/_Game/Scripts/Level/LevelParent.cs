@@ -37,7 +37,7 @@ namespace _Game.Scripts.Level
 		    //We can add another things to here so i will do it as a methode.
 		    gameObject.SetActive(false);
 	    }
-
+		//Functions to have faster level generation
 	    #region Editor Utilitys
 	    public void SetLengthOfLevel()
 	    {

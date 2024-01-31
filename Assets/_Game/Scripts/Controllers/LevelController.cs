@@ -16,20 +16,7 @@ namespace _Game.Scripts.Controllers
 	        _currentLevel = PlayerPrefs.GetInt(Constants.KEY_PLAYER_LEVEL, 0);
 	        _gameLevels[_currentLevel].InitilazeLevel();
         }
-
-        private void Update()
-        {
-	        if (Input.GetKeyDown(KeyCode.S))
-	        {
-		        EventManager.TriggerEvent(EventManager.OnLevelStarted);
-	        }
-	        
-	        if (Input.GetKeyDown(KeyCode.D))
-	        {
-		        _gameLevels[0].InitilazeLevel();
-	        }
-        }
-
+        
         public void PassNextLevel()
         {
 	        _gameLevels[_currentLevel].CloseLevel();

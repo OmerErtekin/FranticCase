@@ -21,6 +21,12 @@ namespace _Game.Scripts.Controllers
 		    EventManager.StartListening(EventManager.OnLevelInitialized,()=> _tapToStartPanel.FadeIn(0.5f));
 	    }
 
+	    public void OnTapToPlayClicked()
+	    {
+		    _tapToStartPanel.FadeOutDirectly();
+		    EventManager.TriggerEvent(EventManager.OnLevelStarted);
+	    }
+	    
 	    public void OnNextLevelClicked()
 	    {
 		    GameController.Instance.LevelController.PassNextLevel();
@@ -31,15 +37,6 @@ namespace _Game.Scripts.Controllers
 	    {
 		    GameController.Instance.LevelController.RetryCurrentLevel();
 		    _levelFailPanel.FadeOut(0.5f);
-	    }
-	    
-	    private void Update()
-	    {
-		    if (Input.GetMouseButtonDown(0) && _tapToStartPanel.gameObject.activeInHierarchy)
-		    {
-			    _tapToStartPanel.FadeOutDirectly();
-			    EventManager.TriggerEvent(EventManager.OnLevelStarted);
-		    }
 	    }
     }
 }

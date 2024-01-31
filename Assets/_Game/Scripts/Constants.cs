@@ -9,10 +9,10 @@
         
         #region Movement Constants
         public const float MOVEMENT_SPEED = 5;
-        public const float MAX_SWERVE_AMOUNT = 5;
-        public const float SWERVE_SPEED = 5;
+        public const float MAX_SWERVE_AMOUNT = 2.5f;
+        public const float SWERVE_SPEED = 2;
         public const float MAP_WIDTH = 5;
-        public const float X_VELOCITY_TRESHHOLD = 0.05f;
+        public const float X_VELOCITY_TRESHHOLD = 0.5f;
         #endregion
 
         #region Upgrade Constants
