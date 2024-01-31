@@ -40,7 +40,7 @@ namespace _Game.Scripts
 
 	    private void EquipPistolAtLevelInit()
 	    {
-		    EquipWeapon(WeaponTypes.Pistol);
+		    EquipWeapon(WeaponTypes.Pistol,false);
 		    _currentWeapon.CanFire = false;
 	    }
 
@@ -58,7 +58,7 @@ namespace _Game.Scripts
 		    _currentWeapon.CanFire = false;
 	    }
 
-	    public void EquipWeapon(WeaponTypes type)
+	    public void EquipWeapon(WeaponTypes type,bool canFire)
 	    {
 		    if(_currentWeapon && _currentWeapon.WeaponType == type) return;
 		    
@@ -67,6 +67,7 @@ namespace _Game.Scripts
 			    if (weapon.WeaponType == type)
 			    {
 				    _currentWeapon = weapon;
+				    _currentWeapon.CanFire = canFire;
 				    _firePosFollower.SetTarget(_currentWeapon.AimTargetTransform);
 				    weapon.EnableWeapon();
 			    }

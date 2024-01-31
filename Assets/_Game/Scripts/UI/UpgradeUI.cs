@@ -34,12 +34,12 @@ namespace _Game.Scripts.UI
 
 	    public void HideUpgradeUI()
 	    {
+		    Time.timeScale = 1;
 		    _fadeableUI.FadeOut(0.25f,onFadeCompleted: () =>
 		    {
 			    foreach (var card in _upgradeCards)
 			    {
 				    card.HideUpgradeCardDirectly();
-				    Time.timeScale = 1;
 			    }
 		    });
 	    }

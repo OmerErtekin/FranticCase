@@ -36,27 +36,6 @@ namespace _Game.Scripts.Player
             EventManager.StopListening(EventManager.OnPlayerStartToMove,SetStateOnMovement);
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                _weaponHandler.EquipWeapon(WeaponTypes.Pistol);
-                _weaponHandler.CurrentWeapon.CanFire = true;
-            }
-
-            if (Input.GetKeyDown(KeyCode.F2))
-            {
-                _weaponHandler.EquipWeapon(WeaponTypes.SmgRifle);
-                _weaponHandler.CurrentWeapon.CanFire = true;
-            }
-
-            if (Input.GetKeyDown(KeyCode.F3))
-            {
-                _weaponHandler.EquipWeapon(WeaponTypes.Taser);
-                _weaponHandler.CurrentWeapon.CanFire = true;
-            }
-        }
-
         public void WinTheLevel()
         {
             if(_playerState == PlayerState.Won) return;
