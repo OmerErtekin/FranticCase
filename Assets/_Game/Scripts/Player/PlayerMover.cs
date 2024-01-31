@@ -29,7 +29,7 @@ namespace _Game.Scripts.Player
 
         private void Awake()
         {
-	        _controller = GetComponent<PlayerController>();
+	        _controller = GameController.Instance.Player;
 	        _rigidbody = _controller.Rigidbody;
 	        _animator = _controller.Animator;
         }

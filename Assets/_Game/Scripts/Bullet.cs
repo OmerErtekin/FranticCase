@@ -15,13 +15,25 @@ namespace _Game.Scripts
 	    [SerializeField] private float _baseLifeTime;
 	    private bool _isExploded;
 	    private float _currentLifeTime,_currentSpeed;
-	    private int _currentDamage,_currentBounceCount;
+	    private int _currentBounceCount,_currentDamage;
 	    #endregion
-
-	    #region Properties
-	    public int Damage => _currentDamage;
-	    #endregion
+	    
+	    private void Update()
+	    {
+		    MoveForward();
+	    }
         
+	    private void OnCollisionEnter(Collision other)
+	    {
+		    //Bullets can only contact with walls & obstacles. It can be set on Bullet/Rigidbody/LayerOverrides
+		    if (other.transform.TryGetComponent(out Obstacle obstacle))
+		    {
+			    obstacle.HitByBullet(_currentDamage);
+		    }
+		    
+		    TryBounce(other.contacts[0].normal);
+	    }
+	    
 	    public void SetBullet(int damage,int bounceCount,float speed,Transform firePos,WeaponTypes type)
 	    {
 		    for (var i = 0; i < _bulletModels.Count; i++)
@@ -36,22 +48,6 @@ namespace _Game.Scripts
 		    _currentDamage = damage;
 		    transform.position = firePos.position;
 		    transform.rotation = firePos.rotation;
-	    }
-
-	    private void Update()
-	    {
-		    MoveForward();
-	    }
-	    
-	    private void OnCollisionEnter(Collision other)
-	    {
-		    //Bullets can only contact with walls & obstacles. It can be set on Bullet/Rigidbody/LayerOverrides
-		    if (other.transform.TryGetComponent(out Obstacle obstacle))
-		    {
-			    obstacle.HitByBullet(this);
-		    }
-		    
-		    TryBounce(other.contacts[0].normal);
 	    }
 
 	    private void MoveForward()

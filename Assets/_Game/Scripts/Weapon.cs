@@ -14,6 +14,7 @@ namespace _Game.Scripts
         #endregion
 
         #region Variables
+        //Each weapon has different scaling with base upgrade factor as you suggested.
         [SerializeField] private float _baseFireRate, _baseUpgradeFactor;
         [SerializeField] private int _baseBulletDamage;
         [SerializeField] private float _bulletSpeed;
@@ -64,6 +65,7 @@ namespace _Game.Scripts
 
         private void ApplyUpgrades()
         {
+            //I use upgradeData.XLevel - 1 because levels are starting from 1
             var upgradeData = GameController.Instance.Player.UpgradeHandler.UpgradeData;
             _currentBulletDamage = _baseBulletDamage + (int)(1 * (upgradeData.BulletDamageLevel - 1) * _baseUpgradeFactor);
             _currentFireRate = _baseFireRate + 1 * (upgradeData.FireRateLevel - 1) * _baseUpgradeFactor;
@@ -76,7 +78,9 @@ namespace _Game.Scripts
             if (!_playerAnimator.IsIKEnabled || !CanFire || Time.time < _nextFireTime) return;
 
             _nextFireTime = Time.time + 1 / _currentFireRate;
-
+            //I tried to have scalable implementation, if we want to add some more formation.
+            //In this approach, all we have to do is add new position indexes at firePoses on PlayerWeaponHandler.cs and 
+            //define an start-end index.
             switch (_currentFormation)
             {
                 case AttackFormation.Single:
@@ -97,6 +101,15 @@ namespace _Game.Scripts
                         _currentBullet.SetBullet(_currentBulletDamage, _currentBulletBounceCount, _bulletSpeed, _firePoses[i], _type);
                     }
                     break;
+                /*Psedeu implementation of how we can add a new formation
+                 case AttackFormation.NewFormation
+                    for (var i = Constants.NEW_START_INDEX; i < Constants.NEW_START_INDEX + BULLET_COUNT; i++)
+                    {
+                        _currentBullet = _objectPool.GetBullet();
+                        _currentBullet.SetBullet(_currentBulletDamage, _currentBulletBounceCount, _bulletSpeed, _firePoses[i], _type);
+                    }
+                    break;
+                 */
             }
         }
     }

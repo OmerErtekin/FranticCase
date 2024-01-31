@@ -26,14 +26,12 @@ namespace _Game.Scripts.Player
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventManager.OnLevelInitialized,SetStateOnInitilaze);
-            EventManager.StartListening(EventManager.OnPlayerStartToMove,SetStateOnMovement);
+            EventManager.StartListening(EventManager.OnLevelInitialized, ()=> _playerState = PlayerState.WaitForStart);
         }
 
         private void OnDisable()
         {
-            EventManager.StopListening(EventManager.OnLevelInitialized,SetStateOnInitilaze);
-            EventManager.StopListening(EventManager.OnPlayerStartToMove,SetStateOnMovement);
+            EventManager.StopListening(EventManager.OnLevelInitialized, ()=> _playerState = PlayerState.WaitForStart);
         }
 
         public void WinTheLevel()
@@ -53,10 +51,6 @@ namespace _Game.Scripts.Player
             _mover.StopMovement(PlayerAnims.Fail);
             EventManager.TriggerEvent(EventManager.OnLevelFailed);
         }
-
-        private void SetStateOnInitilaze() => _playerState = PlayerState.WaitForStart;
-
-        private void SetStateOnMovement() => _playerState = PlayerState.Run;
     }
 }
 

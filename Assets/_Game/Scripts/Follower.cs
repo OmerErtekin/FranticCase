@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace _Game.Scripts
 {
+	/// <summary>
+	/// Simple follower script that follows on selected axis with an offset
+	/// </summary>
     public class Follower : MonoBehaviour
     {
 		#region Variables

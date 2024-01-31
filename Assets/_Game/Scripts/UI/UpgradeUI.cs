@@ -19,11 +19,16 @@ namespace _Game.Scripts.UI
 	    public void ShowUpgradeUI()
 	    {
 		    _availableUpgrades = GameController.Instance.Player.UpgradeHandler.GetAvailableUpgrades();
-		    if(_availableUpgrades.Count == 0) return;
+		    if (_availableUpgrades.Count == 0)
+		    {
+			    Debug.LogWarning("There is no more upgrade but player request another one. Check the level flow");
+			    return;
+		    }
 		    
 		    Time.timeScale = 0;
 		    _fadeableUI.FadeIn(0.25f);
 		    _availableUpgrades.Shuffle();
+		    //Show max 3 upgrades at one time. It will adapt automaticly if we have 3 or less upgrade
 		    if (_availableUpgrades.Count > 3)
 		    {
 			    _availableUpgrades.RemoveRange(3,_availableUpgrades.Count - 3);
@@ -51,10 +56,11 @@ namespace _Game.Scripts.UI
 			    _upgradeCards[i].gameObject.SetActive(true);
 		    }
 		    
+		    //To have some kind of animation
 		    for (var i = 0; i < _availableUpgrades.Count; i++)
 		    {
 			    _upgradeCards[i].ShowUpgradeCard(_availableUpgrades[i]);
-			    yield return new WaitForSecondsRealtime(0.25f);
+			    yield return new WaitForSecondsRealtime(0.1f);
 		    }
 	    }
     }

@@ -38,9 +38,9 @@ namespace _Game.Scripts.Level
 	        UpdateMaterialAndText();
         }
         
-        public void HitByBullet(Bullet bullet)
+        public void HitByBullet(int damage)
         {
-	        _currentHealth = Mathf.Max(0, _currentHealth - bullet.Damage);
+	        _currentHealth = Mathf.Max(0, _currentHealth - damage);
 	        if (_currentHealth == 0)
 	        {
 		        gameObject.SetActive(false);

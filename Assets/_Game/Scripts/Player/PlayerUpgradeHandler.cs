@@ -63,12 +63,16 @@ namespace _Game.Scripts.Player
 
         public List<UpgradeType> GetAvailableUpgrades()
         {
+            //No need to change anything when we add new upgrades.
             return Enum.GetValues(typeof(UpgradeType)).Cast<UpgradeType>().Where(IsUpgradeAvailable)
                 .ToList();
         }
         
         private bool IsUpgradeAvailable(UpgradeType upgradeType)
         {
+            //I try to make a easily scalable upgrade system. For example if you want to add another upgrade
+            //to weapon, just define a max level and enum value. Then add this upgrade do PlayerUpgradeData class. And lastly add to Upgrade() function
+            //Then you can implement as you wish on Weapon. 
             return upgradeType switch
             {
                 UpgradeType.FireRate => UpgradeData.FireRateLevel < Constants.MAX_FIRE_RATE_LEVEL,

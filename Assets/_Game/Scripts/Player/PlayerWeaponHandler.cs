@@ -19,12 +19,11 @@ namespace _Game.Scripts
 
 	    #region Properties
 	    public List<Transform> FirePoses => _firePoses;
-	    public Weapon CurrentWeapon => _currentWeapon;
 	    #endregion
 
 	    private void OnEnable()
 	    {
-		    EventManager.StartListening(EventManager.OnLevelInitialized,EquipPistolAtLevelInit);
+		    EventManager.StartListening(EventManager.OnLevelInitialized, ()=> EquipWeapon(WeaponTypes.Pistol,false));
 		    EventManager.StartListening(EventManager.OnLevelStarted,StartFiringAtLevelStart);
 		    EventManager.StartListening(EventManager.OnLevelCompleted,StopFiringAtLevelEnd);
 		    EventManager.StartListening(EventManager.OnLevelFailed,StopFiringAtLevelEnd);
@@ -32,18 +31,11 @@ namespace _Game.Scripts
 
 	    private void OnDisable()
 	    {
-		    EventManager.StopListening(EventManager.OnLevelInitialized,EquipPistolAtLevelInit);
 		    EventManager.StopListening(EventManager.OnLevelStarted,StartFiringAtLevelStart);
 		    EventManager.StopListening(EventManager.OnLevelCompleted,StopFiringAtLevelEnd);
 		    EventManager.StopListening(EventManager.OnLevelFailed,StopFiringAtLevelEnd);
 	    }
-
-	    private void EquipPistolAtLevelInit()
-	    {
-		    EquipWeapon(WeaponTypes.Pistol,false);
-		    _currentWeapon.CanFire = false;
-	    }
-
+	    
 	    private void StartFiringAtLevelStart()
 	    {
 		    if(!_currentWeapon) return;

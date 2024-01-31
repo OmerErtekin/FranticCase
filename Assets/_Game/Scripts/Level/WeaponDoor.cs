@@ -7,10 +7,7 @@ namespace _Game.Scripts
 {
     public class WeaponDoor : BaseDoor
     {
-    	#region Components
-    	#endregion
-
-    	#region Variables
+		#region Variables
 	    [SerializeField] private List<GameObject> _weaponModels;
 	    [SerializeField] private WeaponTypes _type;
 	    #endregion

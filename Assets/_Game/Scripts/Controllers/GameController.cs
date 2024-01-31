@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace _Game.Scripts.Controllers
 {
+	[DefaultExecutionOrder(-99)]
     public class GameController : MonoBehaviour
     {
     	#region Components
