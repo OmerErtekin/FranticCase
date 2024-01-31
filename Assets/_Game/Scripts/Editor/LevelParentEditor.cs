@@ -13,6 +13,8 @@ namespace _Game.Scripts.Editor
 
             var targetParent = (LevelParent)target;
 
+            GUILayout.Label("Please Click Find all door - obstacle buttons\nIf you added or removed new obstacle - door");
+            
             if (GUILayout.Button("Find all obstacle references"))
             {
                 targetParent.GetAllObstacles();

@@ -10,11 +10,11 @@ namespace _Game.Scripts.Level
 	    [SerializeField] private List<Obstacle> _obstacles = new();
 	    [SerializeField] private List<BaseDoor> _doors = new();
 	    [SerializeField] private Transform _endPoint;
-	    #endregion
-
+	    
 	    [Header("For Level Editor")] 
 	    [SerializeField] private Transform _levelPlane;
 	    [SerializeField] private float _levelZLength = 100;
+	    #endregion
 
 	    public void InitilazeLevel()
 	    {
