@@ -19,11 +19,13 @@ namespace _Game.Scripts.Player
 
         private void OnEnable()
         {
+	        EventManager.StartListening(EventManager.OnLevelInitialized,ResetMovement);
 	        EventManager.StartListening(EventManager.OnLevelStarted,StartMovement);
         }
 
         private void OnDisable()
         {
+	        EventManager.StopListening(EventManager.OnLevelInitialized,ResetMovement);
 	        EventManager.StopListening(EventManager.OnLevelStarted,StartMovement);
         }
 
@@ -106,6 +108,12 @@ namespace _Game.Scripts.Player
 	        _zSpeed = 0;
 	        _animator.PlayAnimation(animOnStop);
 	        EventManager.TriggerEvent(EventManager.OnPlayerStop);
+        }
+
+        private void ResetMovement()
+        {
+	        transform.position = Vector3.zero;
+	        StopMovement(PlayerAnims.Idle);
         }
     }
 }

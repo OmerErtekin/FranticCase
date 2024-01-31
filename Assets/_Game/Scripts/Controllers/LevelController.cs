@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using _Game.Scripts.Level;
 using UnityEngine;
 
 namespace _Game.Scripts.Controllers
@@ -8,11 +10,12 @@ namespace _Game.Scripts.Controllers
     	#endregion
 
     	#region Variables
+	    [SerializeField] private List<LevelParent> _gameLevels;
         #endregion
 
         private void Start()
         {
-	        EventManager.TriggerEvent(EventManager.OnLevelInitialized);
+	        _gameLevels[0].InitilazeLevel();
         }
 
         private void Update()
@@ -24,7 +27,7 @@ namespace _Game.Scripts.Controllers
 	        
 	        if (Input.GetKeyDown(KeyCode.D))
 	        {
-		        EventManager.TriggerEvent(EventManager.OnLevelCompleted);
+		        _gameLevels[0].InitilazeLevel();
 	        }
         }
     }

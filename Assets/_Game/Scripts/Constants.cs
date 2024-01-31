@@ -16,10 +16,16 @@
         #endregion
 
         #region Upgrade Constants
-        public const int MAX_FIRE_RATE_LEVEL = 3;
-        public const int MAX_DAMAGE_LEVEL = 3;
+        public const int MAX_FIRE_RATE_LEVEL = 2;
+        public const int MAX_DAMAGE_LEVEL = 2;
         public const int MAX_FORMATION_LEVEL = 2;
         public const int MAX_BOUNCE_BULLET_LEVEL = 3;
+        public const int TOTAL_COUNT_OF_UPGRADE = 7;
+        #endregion
+
+        #region Level Constants
+        public const float UPGRADE_START_PERCENTAGE = 0.05f;
+        public const float UPGRADE_END_PERCENTAGE = 0.8f;
         #endregion
     }
 }

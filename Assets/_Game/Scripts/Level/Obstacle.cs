@@ -31,7 +31,7 @@ namespace _Game.Scripts.Level
 	        }
         }
 
-        private void ResetObstacle()
+        public void ResetObstacle()
         {
 	        gameObject.SetActive(true);
 	        _currentHealth = _health;

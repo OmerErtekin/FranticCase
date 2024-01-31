@@ -17,7 +17,7 @@ namespace _Game.Scripts.Level
 		    OnContactedWithPlayer(player);
 	    }
 	    
-	    protected virtual void ResetDoor()
+	    public virtual void ResetDoor()
 	    {
 		    if (_activeObjectsParent)
 		    {

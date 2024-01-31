@@ -11,7 +11,7 @@ namespace _Game.Scripts
 	    [SerializeField] private List<ParticleSystem> _fireworkParticles;
         #endregion
 
-        protected override void ResetDoor()
+        public override void ResetDoor()
         {
 	        foreach (var particle in _fireworkParticles)
 	        {

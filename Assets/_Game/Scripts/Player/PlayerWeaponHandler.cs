@@ -23,7 +23,7 @@ namespace _Game.Scripts
 
 	    private void OnEnable()
 	    {
-		    EventManager.StartListening(EventManager.OnLevelInitialized, ()=> EquipWeapon(WeaponTypes.Pistol,false));
+		    EventManager.StartListening(EventManager.OnLevelInitialized, () => EquipWeapon(WeaponTypes.Pistol,false));
 		    EventManager.StartListening(EventManager.OnLevelStarted,StartFiringAtLevelStart);
 		    EventManager.StartListening(EventManager.OnLevelCompleted,StopFiringAtLevelEnd);
 		    EventManager.StartListening(EventManager.OnLevelFailed,StopFiringAtLevelEnd);
@@ -52,8 +52,6 @@ namespace _Game.Scripts
 
 	    public void EquipWeapon(WeaponTypes type,bool canFire)
 	    {
-		    if(_currentWeapon && _currentWeapon.WeaponType == type) return;
-		    
 		    foreach (var weapon in _weapons)
 		    {
 			    if (weapon.WeaponType == type)

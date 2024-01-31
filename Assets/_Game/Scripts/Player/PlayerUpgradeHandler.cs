@@ -22,12 +22,7 @@ namespace _Game.Scripts.Player
         {
             EventManager.StopListening(EventManager.OnLevelInitialized, InitializeUpgradeData);
         }
-
-        private void Awake()
-        {
-            InitializeUpgradeData();
-        }
-
+        
         private void InitializeUpgradeData()
         {
             UpgradeData = new PlayerUpgradeData

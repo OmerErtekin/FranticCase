@@ -186,7 +186,7 @@ namespace _Game.Scripts.Controllers
         public static readonly Action OnLevelCompleted = () => { };
         public static readonly Action OnPlayerStartToMove = () => { };
         public static readonly Action OnPlayerStop = () => { };
-        public static readonly Action<Weapon> OnWeaponEquiped = _ => { };
+        public static readonly Action<Weapon> OnWeaponEquiped = _ => { }; //Equiped weapon
         public static readonly Action OnPlayerUpgraded = () => { };
         #endregion
     }
