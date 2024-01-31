@@ -20,17 +20,11 @@ namespace _Game.Scripts.Player
         private void OnEnable()
         {
 	        EventManager.StartListening(EventManager.OnLevelStarted,StartMovement);
-	        EventManager.StartListening(EventManager.OnLevelInitialized,StopMovement);
-	        EventManager.StartListening(EventManager.OnLevelCompleted,StopMovement);
-	        EventManager.StartListening(EventManager.OnLevelFailed,StopMovement);
         }
 
         private void OnDisable()
         {
 	        EventManager.StopListening(EventManager.OnLevelStarted,StartMovement);
-	        EventManager.StopListening(EventManager.OnLevelInitialized,StopMovement);
-	        EventManager.StopListening(EventManager.OnLevelCompleted,StopMovement);
-	        EventManager.StopListening(EventManager.OnLevelFailed,StopMovement);
         }
 
         private void Awake()
@@ -104,13 +98,13 @@ namespace _Game.Scripts.Player
 	        EventManager.TriggerEvent(EventManager.OnPlayerStartToMove);
         }
 
-        private void StopMovement()
+        public void StopMovement(PlayerAnims animOnStop)
         {
 	        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 	        _canMove = false;
 	        _inputX = 0;
 	        _zSpeed = 0;
-	        _animator.PlayAnimation(PlayerAnims.Idle);
+	        _animator.PlayAnimation(animOnStop);
 	        EventManager.TriggerEvent(EventManager.OnPlayerStop);
         }
     }

@@ -1,5 +1,12 @@
 namespace _Game.Scripts
 {
+    public enum PlayerState
+    {
+        WaitForStart = 0,
+        Run = 1,
+        Won = 2,
+        Failed = 3,
+    }
     public enum PlayerAnims
     {
         Idle = 0,

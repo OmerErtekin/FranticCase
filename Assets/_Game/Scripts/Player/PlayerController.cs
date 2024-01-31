@@ -1,3 +1,4 @@
+using _Game.Scripts.Managers;
 using UnityEngine;
 
 namespace _Game.Scripts.Player
@@ -17,8 +18,21 @@ namespace _Game.Scripts.Player
         public PlayerUpgradeHandler UpgradeHandler => _upgradeHandler;
         public PlayerAnimator Animator => _animator;
         public Rigidbody Rigidbody => _rigidbody;
+        public PlayerState PlayerState { get; set; }
         #endregion
-        
+
+        private void OnEnable()
+        {
+            EventManager.StartListening(EventManager.OnLevelInitialized,SetStateOnInitilaze);
+            EventManager.StartListening(EventManager.OnPlayerStartToMove,SetStateOnMovement);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.StopListening(EventManager.OnLevelInitialized,SetStateOnInitilaze);
+            EventManager.StopListening(EventManager.OnPlayerStartToMove,SetStateOnMovement);
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Z))
@@ -59,6 +73,28 @@ namespace _Game.Scripts.Player
                 _weaponHandler.CurrentWeapon.CanFire = true;
             }
         }
+
+        public void WinTheLevel()
+        {
+            if(PlayerState == PlayerState.Won) return;
+            
+            PlayerState = PlayerState.Won;
+            _mover.StopMovement(PlayerAnims.Victory);
+            EventManager.TriggerEvent(EventManager.OnLevelCompleted);
+        }
+        
+        public void FailTheLevel()
+        {
+            if(PlayerState == PlayerState.Failed) return;
+            
+            PlayerState = PlayerState.Failed;
+            _mover.StopMovement(PlayerAnims.Fail);
+            EventManager.TriggerEvent(EventManager.OnLevelFailed);
+        }
+
+        private void SetStateOnInitilaze() => PlayerState = PlayerState.WaitForStart;
+
+        private void SetStateOnMovement() => PlayerState = PlayerState.Run;
     }
 }
 

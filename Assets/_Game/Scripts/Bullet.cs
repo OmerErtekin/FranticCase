@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace _Game.Scripts
@@ -6,17 +6,28 @@ namespace _Game.Scripts
     public class Bullet : MonoBehaviour
     {
     	#region Components
+	    [SerializeField] private ParticleSystem _explosionParticle;
     	#endregion
 
     	#region Variables
+	    [SerializeField] private List<GameObject> _bulletModels;
 	    [SerializeField] private float _baseLifeTime;
 	    private bool _isExploded;
 	    private float _currentLifeTime,_currentSpeed;
 	    private int _currentDamage,_currentBounceCount;
 	    #endregion
+
+	    #region Properties
+	    public int Damage => _currentDamage;
+	    #endregion
         
-	    public void SetBullet(int damage,int bounceCount,float speed,Transform firePos)
+	    public void SetBullet(int damage,int bounceCount,float speed,Transform firePos,WeaponTypes type)
 	    {
+		    for (var i = 0; i < _bulletModels.Count; i++)
+		    {
+			    _bulletModels[i].SetActive(i == (int)type);
+		    }
+		    
 		    _isExploded = false;
 		    _currentLifeTime = _baseLifeTime;
 		    _currentBounceCount = bounceCount;
@@ -59,6 +70,9 @@ namespace _Game.Scripts
 		    if(_isExploded) return;
 
 		    _isExploded = true;
+		    _explosionParticle.transform.parent = null;
+		    _explosionParticle.transform.SetPositionAndRotation(transform.position,transform.rotation);
+		    _explosionParticle.Play();
 		    gameObject.SetActive(false);
 	    }
 

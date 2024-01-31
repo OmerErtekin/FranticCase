@@ -28,15 +28,15 @@ namespace _Game.Scripts.Player
 
         private void OnEnable()
         {
-	        EventManager.StartListening(EventManager.OnPlayerStartToMove,SetAnimatorOnMovementStart);
-	        EventManager.StartListening(EventManager.OnPlayerStop,SetAnimatorOnMovementStop);
+	        EventManager.StartListening(EventManager.OnPlayerStartToMove,SetIKOnMovementStart);
+	        EventManager.StartListening(EventManager.OnPlayerStop,SetIKOnMovementStop);
 	        EventManager.StartListening(EventManager.OnWeaponEquiped,UpdateIKForWeapon);
         }
 
         private void OnDisable()
         {
-	        EventManager.StopListening(EventManager.OnPlayerStartToMove,SetAnimatorOnMovementStart);
-	        EventManager.StopListening(EventManager.OnPlayerStop,SetAnimatorOnMovementStop);
+	        EventManager.StopListening(EventManager.OnPlayerStartToMove,SetIKOnMovementStart);
+	        EventManager.StopListening(EventManager.OnPlayerStop,SetIKOnMovementStop);
 	        EventManager.StopListening(EventManager.OnWeaponEquiped,UpdateIKForWeapon);
         }
 
@@ -57,12 +57,12 @@ namespace _Game.Scripts.Player
 	        }
         }
 
-        private void SetAnimatorOnMovementStart()
+        private void SetIKOnMovementStart()
         {
 	        SetSecondLayerAndIK(1,0.25f);
         }
 
-        private void SetAnimatorOnMovementStop()
+        private void SetIKOnMovementStop()
         {
 	        SetSecondLayerAndIK(0,0.1f);
         }
