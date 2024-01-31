@@ -27,7 +27,7 @@ namespace _Game.Scripts.Player
         private void OnEnable()
         {
             EventManager.StartListening(EventManager.OnLevelInitialized, ()=> _playerState = PlayerState.WaitForStart);
-            EventManager.StartListening(EventManager.OnLevelStarted, ()=> _playerState = PlayerState.Run);
+            EventManager.StartListening(EventManager.OnPlayerStartToMove, ()=> _playerState = PlayerState.Run);
         }
 
         public void WinTheLevel()
