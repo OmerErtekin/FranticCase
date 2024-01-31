@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 5562669506525161785}
   - {fileID: 8073377239564755830}
   - {fileID: 8935544290040129007}
-  _baseLifeTime: 5
+  _baseLifeTime: 3
 --- !u!54 &8348249567547450925
 Rigidbody:
   m_ObjectHideFlags: 0

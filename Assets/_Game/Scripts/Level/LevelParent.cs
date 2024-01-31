@@ -18,6 +18,7 @@ namespace _Game.Scripts.Level
 
 	    public void InitilazeLevel()
 	    {
+		    gameObject.SetActive(true);
 		    foreach(var obstacle in _obstacles)
 		    {
 			    obstacle.ResetObstacle();
@@ -29,6 +30,12 @@ namespace _Game.Scripts.Level
 		    }
 		    
 		    EventManager.TriggerEvent(EventManager.OnLevelInitialized);
+	    }
+
+	    public void CloseLevel()
+	    {
+		    //We can add another things to here so i will do it as a methode.
+		    gameObject.SetActive(false);
 	    }
 
 	    #region Editor Utilitys

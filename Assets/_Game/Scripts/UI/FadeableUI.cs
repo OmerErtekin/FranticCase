@@ -17,7 +17,7 @@ namespace  _Game.Scripts.UI
         private Coroutine _showAndHideRoutine;
         #endregion
         
-        public void FadeIn(float fadeInDuration,bool willActivate = true, Action onFadeCompleted = null)
+        public void FadeIn(float fadeInDuration,bool willActivate = true, Action onFadeCompleted = null,float delay = 0)
         {
             _fadeInTween?.Kill();
             _fadeOutTween?.Kill();
@@ -28,28 +28,28 @@ namespace  _Game.Scripts.UI
             
             if (_canvasGroup)
             {
-                _fadeInTween = _canvasGroup.DOFade(1, fadeInDuration).SetTarget(this).From(0).SetUpdate(true);
+                _fadeInTween = _canvasGroup.DOFade(1, fadeInDuration).SetTarget(this).From(0).SetUpdate(true).SetDelay(delay);
             }
             else if (_image)
             {
-                _fadeInTween = _image.DOFade(1, fadeInDuration).SetTarget(this).From(0).SetUpdate(true);
+                _fadeInTween = _image.DOFade(1, fadeInDuration).SetTarget(this).From(0).SetUpdate(true).SetDelay(delay);
             }
 
             _fadeInTween?.OnComplete(() => onFadeCompleted?.Invoke());
         }
 
-        public void FadeOut(float fadeOutDuration, bool willDeactivate = true, Action onFadeCompleted = null)
+        public void FadeOut(float fadeOutDuration, bool willDeactivate = true, Action onFadeCompleted = null,float delay = 0)
         {
             _fadeInTween?.Kill();
             _fadeOutTween?.Kill();
             if (_canvasGroup)
             {
-                _fadeOutTween = _canvasGroup.DOFade(0, fadeOutDuration).SetTarget(this).From(1).SetUpdate(true);
+                _fadeOutTween = _canvasGroup.DOFade(0, fadeOutDuration).SetTarget(this).From(1).SetUpdate(true).SetDelay(delay);
             }
             
             if (_image)
             {
-                _fadeOutTween = _image.DOFade(0, fadeOutDuration).SetTarget(this).From(1).SetUpdate(true);
+                _fadeOutTween = _image.DOFade(0, fadeOutDuration).SetTarget(this).From(1).SetUpdate(true).SetDelay(delay);
             }
 
             _fadeOutTween?.OnComplete(() =>

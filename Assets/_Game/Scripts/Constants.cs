@@ -27,5 +27,9 @@
         public const float UPGRADE_START_PERCENTAGE = 0.05f;
         public const float UPGRADE_END_PERCENTAGE = 0.8f;
         #endregion
+
+        #region Player Constants
+        public static string KEY_PLAYER_LEVEL = "PlayerLevel";
+        #endregion
     }
 }

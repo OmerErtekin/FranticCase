@@ -163,7 +163,7 @@ MonoBehaviour:
   _baseFireRate: 1
   _baseUpgradeFactor: 1
   _baseBulletDamage: 1
-  _bulletSpeed: 12.5
+  _bulletSpeed: 15
   _leftHandTransform: {fileID: 1382691167986139101}
   _aimTransform: {fileID: 7381008938293943106}
   _type: 0
